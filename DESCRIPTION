@@ -1,0 +1,19 @@
+Package: big.data.frame
+Type: Package
+Title: Extend big.char and bigmemory's big.matrix to support larger-than-RAM
+    data.frame-like objects in R.
+Version: 1.0.0
+Date: 2014-10-13
+Author: Jay Emerson
+Maintainer: Jay Emerson <john.emerson@yale.edu>
+Description: Long description here.
+License: LGPL-3
+Copyright: (C) 2014 John W. Emerson
+Depends:
+    methods
+Imports:
+    bigmemory,
+    big.char,
+    foreach
+Suggests:
+    testthat
