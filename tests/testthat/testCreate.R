@@ -43,4 +43,5 @@ test_that("Creating and characteristics 2", {
   expect_that(ncol(x), equals(ncol(y)))
   expect_that(length(x), equals(length(y)))
   expect_that(dim(x), equals(dim(y)))
+  expect_that(dim(x), equals(dim(y)))
 })
