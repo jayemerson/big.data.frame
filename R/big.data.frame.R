@@ -186,8 +186,8 @@ setMethod("[",
           function(x, i, j, ..., drop) {
             #stop("Not yet BDF get:(ANY, ANY)")
             cat("BDF get:(ANY,ANY,missing) row subset extraction.\n")
-            if (length(j)==1) return(as.data.frame(x@data[[j]][i],...)[[1]])
-            return(as.data.frame(lapply(x@data[j], function(a) a[i]), ...))
+            if (length(j)==1) return(as.data.frame(x@data[[j]][i], stringsAsFactors=FALSE)[[1]])
+            return(as.data.frame(lapply(x@data[j], function(a) a[i]), stringsAsFactors=FALSE))
           })
 
 setMethod("[",
@@ -196,18 +196,18 @@ setMethod("[",
             #stop("Not yet BDF get:(ANY, missing)")
             cat("BDF get:(ANY,missing,missing) row subset extraction.\n")
             # Here, current default is drop=TRUE
-            if (ncol(x)==1) return(as.data.frame(x@data[[1]][i],...)[[1]])
+            if (ncol(x)==1) return(as.data.frame(x@data[[1]][i], stringsAsFactors=FALSE)[[1]])
             # Otherwise, have multiple columns to extract
-            return(as.data.frame(lapply(x@data, function(a) a[i]), ...))
+            return(as.data.frame(lapply(x@data, function(a) a[i]), stringsAsFactors=FALSE))
           })
 
 setMethod("[",
           signature(x = "big.data.frame", i="missing", j="ANY", drop="missing"),
           function(x, i, j, ..., drop) {
             cat("BDF get:(missing,ANY,missing)\n")
-            if (length(j)==1) return(as.data.frame(x@data[[j]][],...)[[1]])
+            if (length(j)==1) return(as.data.frame(x@data[[j]][], stringsAsFactors=FALSE)[[1]])
             # Otherwise, multiple column extraction:
-            return(as.data.frame(lapply(x@data[j], function(a) a[]), ...))
+            return(as.data.frame(lapply(x@data[j], function(a) a[]), stringsAsFactors=FALSE))
           })
 
 setMethod("[",
@@ -216,13 +216,13 @@ setMethod("[",
             cat("BDF get:(missing,ANY,ANY)\n")
             if (length(j)==1) {
               if (!drop) {
-                ans <- as.data.frame(x@data[[j]][],...)
+                ans <- as.data.frame(x@data[[j]][], stringsAsFactors=FALSE)
                 names(ans) <- names(x@data)[j]
                 return(ans)
               } # else drop==TRUE next with one column:
-              return(as.data.frame(x@data[[j]][],...)[[1]])
+              return(as.data.frame(x@data[[j]][], stringsAsFactors=FALSE)[[1]])
             } # and otherwise we have multiple columns to extract:
-            return(as.data.frame(lapply(x@data[j], function(a) a[]), ...))
+            return(as.data.frame(lapply(x@data[j], function(a) a[]), stringsAsFactors=FALSE))
           })
 
 setMethod("[",
@@ -230,5 +230,5 @@ setMethod("[",
                     i="missing", j="missing", drop="missing"),
           function(x, i, j, ..., drop) {
             cat("BDF get:(missing,missing,missing)\n")
-            return(as.data.frame(lapply(x@data, function(a) a[]), ...))
+            return(as.data.frame(lapply(x@data, function(a) a[]), stringsAsFactors=FALSE))
           })
