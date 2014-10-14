@@ -7,6 +7,9 @@ Current package build status via use of
 [Travis CI](https://travis-ci.org/jayemerson/big.data.frame):
 <a href="https://travis-ci.org/jayemerson/big.data.frame"><img src="https://travis-ci.org/jayemerson/big.data.frame.svg?branch=master"></a>
 
+The Travis CI build is failing because I haven't yet configured it to
+install `big.char` from GitHub (it's probably only looking at CRAN).
+
 Getting Started
 ===============
 
