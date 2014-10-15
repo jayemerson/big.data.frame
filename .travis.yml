@@ -1,4 +1,4 @@
-# Sample .travis.yml for R projects from https://github.com/craigcitro/r-travis
+#Sample .travis.yml for R projects from https://github.com/craigcitro/r-travis
 
 language: c
 
@@ -9,6 +9,7 @@ before_install:
 
 install:
   - ./travis-tool.sh install_deps
+  - ./travis-tool.sh install_github jayemerson/big.char
 
 script: ./travis-tool.sh run_tests
 

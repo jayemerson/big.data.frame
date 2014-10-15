@@ -3,6 +3,7 @@
 export(attach.big.data.frame)
 export(big.data.frame)
 exportClasses(big.data.frame)
+exportMethods("[")
 exportMethods(dim)
 exportMethods(length)
 exportMethods(ncol)

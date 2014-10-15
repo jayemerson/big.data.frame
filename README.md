@@ -27,7 +27,10 @@ Development notes (10/14/2014)
 
 For the moment, don't do anything with factors.  That is, the
 `big.data.frame` is actually only storing columns of numeric or
-character data (via `big.matrix` and `big.char`).  And extractions
-currently form `data.frame` objects with `stringsAsFactors=FALSE`.
+character data (via `big.matrix` and `big.char`). 
 Rivisit this once `big.factor` is available.
+
+Note that data frames always have row and column names, with
+subsetting preserving them (whether you like it or not).  Need
+to consider this.  I suppose a subset needs to be in-RAM, anyway.
 

@@ -16,8 +16,7 @@
 #   Or perhaps this would be a future change for
 #   bigmemory itself?  I have mixed feelings, frankly.
 #
-# - Not really supporting factors, though we appear to in
-#   the extractions.  But I'm not thrilled with this.
+# - Not currently supporting factors.  Revisit.
 #
 ###############################################################################
 ########################################################################## 80 #
@@ -181,35 +180,50 @@ setMethod('length', signature(x="big.data.frame"),
 # Get/set signatures!
 #
 
+#' @rdname big.data.frame-methods
+#' @exportMethod [
 setMethod("[",
           signature(x = "big.data.frame", i="ANY", j="ANY", drop="missing"),
           function(x, i, j, ..., drop) {
-            #stop("Not yet BDF get:(ANY, ANY)")
             cat("BDF get:(ANY,ANY,missing) row subset extraction.\n")
-            if (length(j)==1) return(as.data.frame(x@data[[j]][i], stringsAsFactors=FALSE)[[1]])
-            return(as.data.frame(lapply(x@data[j], function(a) a[i]), stringsAsFactors=FALSE))
+            # Could simplify this, but wait for now; factor issue.
+            if (length(j)==1) return(as.data.frame(x@data[[j]][i],
+                                                   stringsAsFactors=FALSE)[[1]])
+            return(as.data.frame(lapply(x@data[j], function(a) a[i]),
+                                 stringsAsFactors=FALSE))
           })
 
+#' @rdname big.data.frame-methods
+#' @exportMethod [
 setMethod("[",
           signature(x = "big.data.frame", i="ANY", j="missing", drop="missing"),
           function(x, i, j, ..., drop) {
             #stop("Not yet BDF get:(ANY, missing)")
             cat("BDF get:(ANY,missing,missing) row subset extraction.\n")
             # Here, current default is drop=TRUE
-            if (ncol(x)==1) return(as.data.frame(x@data[[1]][i], stringsAsFactors=FALSE)[[1]])
+            if (ncol(x)==1) return(as.data.frame(x@data[[1]][i],
+                                                 stringsAsFactors=FALSE)[[1]])
             # Otherwise, have multiple columns to extract
-            return(as.data.frame(lapply(x@data, function(a) a[i]), stringsAsFactors=FALSE))
+            return(as.data.frame(lapply(x@data, function(a) a[i]),
+                                 stringsAsFactors=FALSE))
           })
 
+#' @rdname big.data.frame-methods
+#' @exportMethod [
 setMethod("[",
           signature(x = "big.data.frame", i="missing", j="ANY", drop="missing"),
           function(x, i, j, ..., drop) {
             cat("BDF get:(missing,ANY,missing)\n")
-            if (length(j)==1) return(as.data.frame(x@data[[j]][], stringsAsFactors=FALSE)[[1]])
+            # Consider simplifying depending on factor issue, eventually:
+            if (length(j)==1) return(as.data.frame(x@data[[j]][],
+                                                   stringsAsFactors=FALSE)[[1]])
             # Otherwise, multiple column extraction:
-            return(as.data.frame(lapply(x@data[j], function(a) a[]), stringsAsFactors=FALSE))
+            return(as.data.frame(lapply(x@data[j], function(a) a[]),
+                                 stringsAsFactors=FALSE))
           })
 
+#' @rdname big.data.frame-methods
+#' @exportMethod [
 setMethod("[",
           signature(x = "big.data.frame", i="missing", j="ANY", drop="logical"),
           function(x, i, j, ..., drop) {
@@ -222,13 +236,18 @@ setMethod("[",
               } # else drop==TRUE next with one column:
               return(as.data.frame(x@data[[j]][], stringsAsFactors=FALSE)[[1]])
             } # and otherwise we have multiple columns to extract:
-            return(as.data.frame(lapply(x@data[j], function(a) a[]), stringsAsFactors=FALSE))
+            return(as.data.frame(lapply(x@data[j], function(a) a[]),
+                                 stringsAsFactors=FALSE))
           })
 
+#' @rdname big.data.frame-methods
+#' @exportMethod [
 setMethod("[",
           signature(x = "big.data.frame",
                     i="missing", j="missing", drop="missing"),
           function(x, i, j, ..., drop) {
             cat("BDF get:(missing,missing,missing)\n")
-            return(as.data.frame(lapply(x@data, function(a) a[]), stringsAsFactors=FALSE))
+            cat("Probably not right if a 1-column data frame\n")
+            return(as.data.frame(lapply(x@data, function(a) a[]),
+                                 stringsAsFactors=FALSE))
           })
