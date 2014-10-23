@@ -6,6 +6,8 @@
 \alias{[,big.data.frame,missing,ANY,logical-method}
 \alias{[,big.data.frame,missing,ANY,missing-method}
 \alias{[,big.data.frame,missing,missing,missing-method}
+\alias{[<-,big.data.frame,ANY,missing-method}
+\alias{[<-,big.data.frame,missing,ANY-method}
 \alias{dim,big.data.frame-method}
 \alias{length,big.data.frame-method}
 \alias{ncol,big.data.frame-method}
@@ -24,7 +26,11 @@
 
 \S4method{[}{big.data.frame,ANY,missing,missing}(x, i, j, ..., drop = TRUE)
 
+\S4method{[}{big.data.frame,ANY,missing}(x, i, j, ...) <- value
+
 \S4method{[}{big.data.frame,missing,ANY,missing}(x, i, j, ..., drop = TRUE)
+
+\S4method{[}{big.data.frame,missing,ANY}(x, i, j, ...) <- value
 
 \S4method{[}{big.data.frame,missing,ANY,logical}(x, i, j, ..., drop = TRUE)
 

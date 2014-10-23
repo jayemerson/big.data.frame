@@ -84,7 +84,6 @@ big.data.frame <- function(nrow, classes,
   
   if (!is.null(location)) {
     print("We will be creating filebackings in this location.")
-    print("And we need some overall descriptor perhaps?")
     backingfile <- paste(names, ".bin", sep="")
     descriptorfile <- paste(names, ".desc", sep="")
     dput(list(dim=c(nrow, length(classes)),
@@ -185,7 +184,7 @@ setMethod('length', signature(x="big.data.frame"),
 setMethod("[",
           signature(x = "big.data.frame", i="ANY", j="ANY", drop="missing"),
           function(x, i, j, ..., drop) {
-            cat("BDF get:(ANY,ANY,missing) row subset extraction.\n")
+            #cat("BDF get:(ANY,ANY,missing) row subset extraction.\n")
             # Could simplify this, but wait for now; factor issue.
             if (length(j)==1) return(as.data.frame(x@data[[j]][i],
                                                    stringsAsFactors=FALSE)[[1]])
@@ -199,7 +198,7 @@ setMethod("[",
           signature(x = "big.data.frame", i="ANY", j="missing", drop="missing"),
           function(x, i, j, ..., drop) {
             #stop("Not yet BDF get:(ANY, missing)")
-            cat("BDF get:(ANY,missing,missing) row subset extraction.\n")
+            #cat("BDF get:(ANY,missing,missing) row subset extraction.\n")
             # Here, current default is drop=TRUE
             if (ncol(x)==1) return(as.data.frame(x@data[[1]][i],
                                                  stringsAsFactors=FALSE)[[1]])
@@ -209,11 +208,21 @@ setMethod("[",
           })
 
 #' @rdname big.data.frame-methods
+#' @exportMethod [<-
+setMethod("[<-",
+          signature(x = "big.data.frame", i="ANY", j="missing"),
+          function(x, i, j, ..., value) {
+            #cat("BDF set:(ANY,missing,missing)\n")
+            for (jj in 1:ncol(x)) x@data[[jj]][i] <- value[,jj]
+            return(x)
+          })
+
+#' @rdname big.data.frame-methods
 #' @exportMethod [
 setMethod("[",
           signature(x = "big.data.frame", i="missing", j="ANY", drop="missing"),
           function(x, i, j, ..., drop) {
-            cat("BDF get:(missing,ANY,missing)\n")
+            #cat("BDF get:(missing,ANY,missing)\n")
             # Consider simplifying depending on factor issue, eventually:
             if (length(j)==1) return(as.data.frame(x@data[[j]][],
                                                    stringsAsFactors=FALSE)[[1]])
@@ -223,11 +232,20 @@ setMethod("[",
           })
 
 #' @rdname big.data.frame-methods
+#' @exportMethod [<-
+setMethod("[<-",
+          signature(x = "big.data.frame", i="missing", j="ANY"),
+          function(x, i, j, ..., value) {
+            #cat("BDF set:(missing,ANY,missing)\n")
+            return("Not done")
+          })
+
+#' @rdname big.data.frame-methods
 #' @exportMethod [
 setMethod("[",
           signature(x = "big.data.frame", i="missing", j="ANY", drop="logical"),
           function(x, i, j, ..., drop) {
-            cat("BDF get:(missing,ANY,ANY)\n")
+            #cat("BDF get:(missing,ANY,ANY)\n")
             if (length(j)==1) {
               if (!drop) {
                 ans <- as.data.frame(x@data[[j]][], stringsAsFactors=FALSE)
@@ -246,8 +264,8 @@ setMethod("[",
           signature(x = "big.data.frame",
                     i="missing", j="missing", drop="missing"),
           function(x, i, j, ..., drop) {
-            cat("BDF get:(missing,missing,missing)\n")
-            cat("Probably not right if a 1-column data frame\n")
+            #cat("BDF get:(missing,missing,missing)\n")
+            #cat("Probably not right if a 1-column data frame\n")
             return(as.data.frame(lapply(x@data, function(a) a[]),
                                  stringsAsFactors=FALSE))
           })

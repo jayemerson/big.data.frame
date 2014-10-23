@@ -14,6 +14,7 @@ Depends:
 Imports:
     bigmemory,
     big.char,
-    foreach
+    foreach,
+    iterators
 Suggests:
     testthat

@@ -14,4 +14,7 @@
 #' @importFrom foreach foreach
 #' @importFrom foreach %do%
 #' @importFrom foreach %dopar%
+#' @importFrom iterators iread.table
+#' @importFrom iterators ireadLines
+#' @importFrom iterators nextElem
 NULL
